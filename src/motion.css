@@ -1,0 +1,86 @@
+/* ===== Required checkpoints 01–06 (void + ember palette) ===== */
+:root { --accent: #ff9a6b; --ink: #f3ede6; --muted: #a8a199; --line: #3b3430;
+  color: #f3ede6; background: #020203; color-scheme: dark; }
+
+/* 01 — Smooth input focus + ring */
+.field input { transition: border-color 180ms ease, box-shadow 180ms ease; }
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px #ff9a6b33; }
+
+/* 02 — Hover lift + press */
+.primary { transition: transform 180ms ease, box-shadow 180ms ease; }
+.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 28px #ff5a1f55; }
+.primary:active:not(:disabled) { transform: translateY(0) scale(.98); }
+
+/* 03 — Shake on error */
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-6px); } 50% { transform: translateX(6px); } }
+.is-error { animation: shake 380ms ease; }
+
+/* 04 — Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { animation: spin 800ms linear infinite; }
+
+/* 05 — Panel transition */
+.panel-enter-active, .panel-leave-active { transition: opacity 320ms ease, transform 320ms ease; }
+.panel-enter-from { opacity: 0; transform: translateY(18px); }
+.panel-leave-to { opacity: 0; transform: translateY(-12px); }
+
+/* ===== Full-bleed space (WebGL canvas lives in .space) ===== */
+.shell { position: relative; z-index: 1; }
+.space { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, #1a0a06, #020203 70%); }
+.space canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.intro { background: transparent; }
+.intro-copy { margin: 0 0 auto; padding: 60px 0 0; }
+.intro h1 { font-size: clamp(38px, 4.2vw, 64px); text-shadow: 0 2px 30px #000; }
+.intro-copy > p:last-child { max-width: 320px; color: #c2bab1; text-shadow: 0 1px 14px #000; }
+.eyebrow { color: #ff9d70; }
+.intro-footer, .demo-label, .demo-note, .field small { color: #8f877f; }
+
+.line { display: block; overflow: hidden; padding-bottom: .08em; }
+.word { display: inline-block; }
+@keyframes flow { to { background-position: -300% 0; } }
+.line:last-child .word { background: linear-gradient(90deg, #fff, #ffd9a0, #ff7a45, #ff4d5e, #fff); background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: flow 9s linear infinite; }
+
+/* Login: smaller, borderless glass card floating over the scene */
+.workspace { background: none; border: 0; perspective: 1200px; }
+.card-shell { max-width: 340px; min-height: 0; }
+.card { will-change: transform; background: #05050acc; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  border-radius: 18px; padding: 26px 26px 22px; box-shadow: 0 24px 70px #000b, inset 0 1px 0 #ffffff12; }
+.card h2 { font-size: 34px; margin-bottom: 10px; }
+.description { font-size: 14px; margin-bottom: 20px; }
+.field { margin-bottom: 14px; }
+.field label { font-size: 13px; margin-bottom: 7px; transition: color 180ms ease; }
+.field:focus-within label { color: var(--accent); }
+.field input { padding: 11px 14px; font-size: 15px; background: #ffffff0d; color: var(--ink); }
+.field input::placeholder { color: #7d756d; }
+.primary { min-height: 46px; font-size: 15px; position: relative; overflow: hidden; background-image: linear-gradient(135deg, #c2410c, #a31535); }
+.primary::after { content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+  background: linear-gradient(100deg, #0000 30%, #ffffff40 50%, #0000 70%); transition: transform 600ms ease; }
+.primary:hover:not(:disabled)::after { transform: translateX(120%); }
+.error-message { min-height: 20px; margin-bottom: 12px; color: #ff8f9a; }
+.switch-copy { color: #b3aba2; }
+.notice { color: #ffc38a; }
+.profile-details { border-block-color: #2e2825; }
+.profile-details dt { color: #8f877f; }
+.is-error input[aria-invalid=true] { border-color: #ff6b7a; }
+button:focus-visible, a:focus-visible { outline-color: #ffb089; }
+.welcome h2 { background: linear-gradient(90deg, #fff, #ffd9a0, #ff7a45); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Dive sequence (driven by fx.js) */
+body.warping .shell { pointer-events: none; }
+.flash { position: fixed; inset: 0; z-index: 60; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, #fff 0, #fff 18%, #ffd9a0 40%, #ff5a1a 62%, #0000 78%); }
+.shock { position: fixed; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%;
+  border: 3px solid #ffb27a; box-shadow: 0 0 40px #ff6a2b, inset 0 0 40px #ff6a2b; opacity: 0; pointer-events: none; z-index: 55; }
+.confetti { position: fixed; left: 0; top: 0; width: 7px; height: 7px; border-radius: 50%; pointer-events: none; z-index: 50; box-shadow: 0 0 10px 2px currentColor; }
+
+@media (max-width: 760px) { .card-shell { max-width: 100%; } .card { padding: 22px; } }
+
+/* 06 — Reduced motion (kept last) */
+@media (prefers-reduced-motion: reduce) {
+  .field input, .field label, .primary, .primary::after, .panel-enter-active, .panel-leave-active { transition: none; }
+  .is-error, .spinner, .line:last-child .word { animation: none; }
+  .primary:hover:not(:disabled), .primary:active:not(:disabled), .panel-enter-from, .panel-leave-to { transform: none; }
+  .primary:hover:not(:disabled)::after { transform: translateX(-120%); }
+}
